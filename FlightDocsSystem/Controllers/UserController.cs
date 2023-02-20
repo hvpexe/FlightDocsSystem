@@ -3,6 +3,7 @@ using FlightDocsSystem.ViewModels;
 using FlightDocsSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace FlightDocsSystem.Controllers
 {
@@ -20,10 +21,24 @@ namespace FlightDocsSystem.Controllers
         [HttpPost]
         public IActionResult CreateUser(UserDto request)
         {
+            //check email format
+            if(Regex.IsMatch(request.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                if (!request.Email.EndsWith("@vietjetair.com"))
+                {
+                    return BadRequest("Invalid email: email extension is not @vietjetair.com");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid email: incorrect email format");
+            }
+
             var user = new User
             {
                 Name = request.Name,
                 Email = request.Email,
+                Password = request.Password,   
                 Phone = request.Phone,
                 Permission = request.Permission,
                 CreatedDate = DateTime.Now
