@@ -170,6 +170,12 @@ namespace FlightDocsSystem.Migrations
                 name: "IX_GroupUser_UsersId",
                 table: "GroupUser",
                 column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Email",
+                table: "User",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />

@@ -172,6 +172,9 @@ namespace FlightDocsSystem.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("User");
                 });
 

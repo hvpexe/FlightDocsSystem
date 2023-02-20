@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightDocsSystem.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230220061618_test1")]
+    [Migration("20230220063322_test1")]
     partial class test1
     {
         /// <inheritdoc />
@@ -174,6 +174,9 @@ namespace FlightDocsSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

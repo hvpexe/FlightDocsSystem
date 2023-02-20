@@ -1,5 +1,7 @@
 ﻿using FlightDocsSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
+using System;
 
 namespace FlightDocsSystem.Data
 {
@@ -14,12 +16,17 @@ namespace FlightDocsSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.Entity<User>()
+             .HasIndex(e => e.Email)
+             .IsUnique();
+
             foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
             base.OnModelCreating(modelbuilder);
+
         }
+
     }
 }
