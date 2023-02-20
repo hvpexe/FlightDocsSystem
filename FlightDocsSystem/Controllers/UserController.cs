@@ -41,16 +41,28 @@ namespace FlightDocsSystem.Controllers
             return Ok(user);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpsertUser(User request)
+        [HttpPut]
+        public IActionResult UpsertUser(UserVM request)
         {
-            return Ok(request);
+            var user = new User
+            {
+                Id = request.Id,
+                Name = request.Name,
+                Email = request.Email,
+                Phone = request.Phone,
+                Permission = request.Permission
+            };
+            _userService.UpsertUser(user);
+
+            return Ok(_userService.GetUser(request.Id));
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            return Ok(id);
+            _userService.Delete(id);
+
+            return Ok();
         }
     }
 }
