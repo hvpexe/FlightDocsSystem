@@ -1,8 +1,6 @@
-﻿using FlightDocsSystem.Models;
-
-namespace FlightDocsSystem.Services
+﻿namespace FlightDocsSystem.Services
 {
-    public interface IUserService
+    public interface IUserRepository
     {
         void CreateUser(User user);
         void Delete(int id);

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FlightDocsSystem.Models
+namespace FlightDocsSystem.Data
 {
     [Table("Flight")]
     public class Flight
@@ -13,7 +13,7 @@ namespace FlightDocsSystem.Models
         [StringLength(255)]
         public string FlightNo { get; set; } = string.Empty;
 
-        public string Route { get; set; } = string.Empty;   
+        public string Route { get; set; } = string.Empty;
 
         public DateTime DepartureDate { get; set; }
 

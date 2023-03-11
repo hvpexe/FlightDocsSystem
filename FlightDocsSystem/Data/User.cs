@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FlightDocsSystem.Models
+namespace FlightDocsSystem.Data
 {
     [Table("User")]
     public class User

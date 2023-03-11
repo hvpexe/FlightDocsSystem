@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FlightDocsSystem.Models
+namespace FlightDocsSystem.Data
 {
     [Table("Document")]
     public class Document
@@ -23,9 +23,9 @@ namespace FlightDocsSystem.Models
 
         public string? Note { get; set; } = string.Empty;
 
-        public User User { get; set; } 
+        public User User { get; set; }
 
-        public Flight Flight { get; set; } 
+        public Flight Flight { get; set; }
 
         public List<Group>? Groups { get; set; }
 

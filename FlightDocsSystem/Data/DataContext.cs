@@ -1,5 +1,4 @@
-﻿using FlightDocsSystem.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using System;
 

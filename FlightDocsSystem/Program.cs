@@ -1,4 +1,4 @@
-global using FlightDocsSystem.Data;
+﻿global using FlightDocsSystem.Data;
 global using Microsoft.EntityFrameworkCore;
 using FlightDocsSystem.Services;
 
@@ -13,7 +13,13 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 
 builder.Services.AddControllers();
-builder.Services.AddTransient<IUserService, UserService>();
+
+// Cấu hình Dependency Injection cho Repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+
+// Config AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

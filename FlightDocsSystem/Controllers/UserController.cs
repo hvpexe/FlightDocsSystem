@@ -1,9 +1,8 @@
-﻿using FlightDocsSystem.Models;
-using FlightDocsSystem.ViewModels;
-using FlightDocsSystem.Services;
+﻿using FlightDocsSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using FlightDocsSystem.Models;
 
 namespace FlightDocsSystem.Controllers
 {
@@ -11,9 +10,9 @@ namespace FlightDocsSystem.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserRepository userService)
         {
             _userService = userService;
         }

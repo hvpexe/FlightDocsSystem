@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FlightDocsSystem.ViewModels
+namespace FlightDocsSystem.Models
 {
     public class UserDto
     {

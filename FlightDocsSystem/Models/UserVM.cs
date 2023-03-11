@@ -1,4 +1,4 @@
-﻿namespace FlightDocsSystem.ViewModels
+﻿namespace FlightDocsSystem.Models
 {
     public class UserVM
     {

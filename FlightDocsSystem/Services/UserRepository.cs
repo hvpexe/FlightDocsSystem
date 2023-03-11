@@ -1,12 +1,11 @@
-﻿using FlightDocsSystem.Models;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 
 namespace FlightDocsSystem.Services
 {
-    public class UserService : IUserService
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
-        public UserService(DataContext context)
+        public UserRepository(DataContext context)
         {
             _context = context;
         }
