@@ -2,7 +2,7 @@
 
 namespace FlightDocsSystem.Models
 {
-    public class UserDto
+    public class UserModel
     {
         public string Name { get; set; } = string.Empty;
 
@@ -10,7 +10,7 @@ namespace FlightDocsSystem.Models
 
         public string Password { get; set; } = string.Empty;
 
-        public string? Phone { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
 
         public string Permission { get; set; } = string.Empty;
 

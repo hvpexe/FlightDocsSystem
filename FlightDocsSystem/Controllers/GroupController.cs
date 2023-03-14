@@ -1,4 +1,5 @@
-﻿using FlightDocsSystem.Models;
+﻿using AutoMapper;
+using FlightDocsSystem.Models;
 using FlightDocsSystem.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace FlightDocsSystem.Controllers
     public class GroupController : ControllerBase
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IMapper _mapper;
 
         public GroupController(IGroupRepository groupRepository)
         {
@@ -17,11 +19,12 @@ namespace FlightDocsSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllGroup()
+        public async Task<IActionResult> GetAllGroups()
         {
             try
             {
                 var data = await _groupRepository.GetAllGroupAsync();
+                var dataVM = data.Select(x => _mapper.Map<GroupVM>(x));
                 return Ok(data);
             } catch
             {
@@ -37,6 +40,7 @@ namespace FlightDocsSystem.Controllers
                 var data = await _groupRepository.GetGroupByIdAsync(id);
                 if (data != null)
                 {
+                    var dataVM = _mapper.Map<GroupVM>(data);
                     return Ok(data);
                 } else
                 {
@@ -50,12 +54,12 @@ namespace FlightDocsSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(GroupModel group)
+        public async Task<IActionResult> CreateGroup(GroupModel group)
         {
             try
             {
-                var data = await _groupRepository.AddGroupAsync(group);
-                return Ok(data);
+                await _groupRepository.CreateGroupAsync(group);
+                return Ok("Create success");
             }
             catch
             {
@@ -64,7 +68,7 @@ namespace FlightDocsSystem.Controllers
         }
 
         [HttpPut("id")]
-        public async Task<IActionResult> Update(int id, GroupVM group)
+        public async Task<IActionResult> UpdateGroup(int id, GroupVM group)
         {
             if (id != group.Id)
             {
@@ -83,7 +87,7 @@ namespace FlightDocsSystem.Controllers
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteGroup(int id)
         {
             try
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using FlightDocsSystem.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FlightDocsSystem.Services
 {
@@ -10,21 +11,32 @@ namespace FlightDocsSystem.Services
             _context = context;
         }
 
-        public void CreateUser(User user)
+        public async Task<bool> IsEmailExistAsync(string email)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            return await _context.Users.AnyAsync(u => u.Email == email);
         }
 
-        public User GetUser(int id)
+        public async Task CreateUserAsync(User user)
         {
-            User user = _context.Users.Find(id);
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async ValueTask<User?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
             return user;
         }
 
-        public void UpsertUser(User user)
+        public async Task<List<User>> GetAllUsersAsync()
         {
-            var dbUser = GetUser(user.Id);
+            var users = await _context.Users.ToListAsync();
+            return users;
+        }
+
+        public async Task UpsertUserAsync(User user)
+        {
+            var dbUser = await GetUserByIdAsync(user.Id);
             if (dbUser != null)
             {
                 if (!string.IsNullOrEmpty(user.Name))
@@ -35,19 +47,26 @@ namespace FlightDocsSystem.Services
                     dbUser.Phone = user.Phone;
                 if (!string.IsNullOrEmpty(user.Permission))
                     dbUser.Permission = user.Permission;
+
+                _context.Users.Update(dbUser);
+                _context.SaveChanges();
             }
-            _context.Users.Update(dbUser);
-            _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public async Task DeleteUserAsync(int id)
         {
-            var user = GetUser(id);
+            var user = await GetUserByIdAsync(id);
             if (user != null)
             {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
+        }
+
+        public async Task<User> LoginAsync(LoginModel model)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(p => p.Email == model.Email && model.Password == model.Password);
+            return user;
         }
     }
 }

@@ -17,6 +17,7 @@ builder.Services.AddControllers();
 // Cấu hình Dependency Injection cho Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 
 // Config AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -6,15 +6,13 @@ namespace FlightDocsSystem.Services
     public class GroupRepository : IGroupRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
 
-        public GroupRepository(DataContext context, IMapper mapper)
+        public GroupRepository(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<GroupVM> AddGroupAsync(GroupModel group)
+        public async Task CreateGroupAsync(GroupModel group)
         {
             Group newGroup = new Group
             {
@@ -24,9 +22,6 @@ namespace FlightDocsSystem.Services
             };
             await _context.Groups.AddAsync(newGroup);
             await _context.SaveChangesAsync();
-
-            var returnGroup = _mapper.Map<GroupVM>(newGroup);
-            return returnGroup;
         }
 
         public async Task DeleteGroupAsync(int id)
@@ -34,22 +29,22 @@ namespace FlightDocsSystem.Services
             var group = await _context.Groups.SingleOrDefaultAsync(gr => gr.Id == id);
             if (group != null)
             {
-                _context.Remove(group);
+                _context.Groups.Remove(group);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<List<GroupVM>> GetAllGroupAsync()
+        public async Task<List<Group>> GetAllGroupAsync()
         {
             var groups = await _context.Groups.ToListAsync();
-            return _mapper.Map<List<GroupVM>>(groups);
+            return groups;
         }
-        public async Task<GroupVM> GetGroupByIdAsync(int id)
+        public async Task<Group?> GetGroupByIdAsync(int id)
         {
             var group = await _context.Groups.SingleOrDefaultAsync(gr => gr.Id == id);
             if (group != null)
             {
-                return _mapper.Map<GroupVM>(group);
+                return group;
             }
             return null;
         }

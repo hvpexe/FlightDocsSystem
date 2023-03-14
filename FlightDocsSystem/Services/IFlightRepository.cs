@@ -4,10 +4,10 @@ namespace FlightDocsSystem.Services
 {
     public interface IFlightRepository
     {
-        Task<List<FlightVM>> GetFlightsAsync();
-        Task<FlightVM> GetFlightByIdAsync(int id);
-        Task<FlightVM> AddGroupAsync(FlightModel flight);
-        Task UpdateGroupAsync(FlightVM flight);
-        Task DeleteGroupAsync(int id);
+        Task<List<Flight>> GetAllFlightsAsync();
+        Task<Flight?> GetFlightByIdAsync(int id);
+        Task<Flight> CreateFlightAsync(Flight flight);
+        Task UpdateFlightAsync(Flight flight);
+        Task DeleteFlightAsync(int id);
     }
 }

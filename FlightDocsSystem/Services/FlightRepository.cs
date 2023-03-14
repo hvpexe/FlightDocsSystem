@@ -1,4 +1,5 @@
-﻿using FlightDocsSystem.Models;
+﻿using FlightDocsSystem.Data;
+using FlightDocsSystem.Models;
 
 namespace FlightDocsSystem.Services
 {
@@ -11,29 +12,52 @@ namespace FlightDocsSystem.Services
             _context = context;
         }
 
-        public Task<FlightVM> AddGroupAsync(FlightModel flight)
+        public async Task<List<Flight>> GetAllFlightsAsync()
         {
-            throw new NotImplementedException();
+            var flights = await _context.Flights.ToListAsync();
+            return flights;
         }
 
-        public Task DeleteGroupAsync(int id)
+        public async Task<Flight?> GetFlightByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var flight = await _context.Flights.SingleOrDefaultAsync(x => x.Id == id);
+            if (flight != null)
+            {
+                return flight;
+            }
+            return null;
         }
 
-        public Task<FlightVM> GetFlightByIdAsync(int id)
+        public async Task<Flight> CreateFlightAsync(Flight flight)
         {
-            throw new NotImplementedException();
+            await _context.Flights.AddAsync(flight);
+            await _context.SaveChangesAsync();
+
+            return flight;
         }
 
-        public Task<List<FlightVM>> GetFlightsAsync()
+        public async Task UpdateFlightAsync(Flight flight)
         {
-            throw new NotImplementedException();
+            var newFlight = await _context.Flights.SingleOrDefaultAsync(x => x.Id == flight.Id);
+            if (newFlight != null)
+            {
+                newFlight.FlightNo = flight.FlightNo;
+                newFlight.Route = flight.Route;
+                newFlight.DepartureDate = flight.DepartureDate;
+            }
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateGroupAsync(FlightVM flight)
+        public async Task DeleteFlightAsync(int id)
         {
-            throw new NotImplementedException();
+            var flight = await _context.Flights.SingleOrDefaultAsync(x => x.Id == id);
+            if (flight != null)
+            {
+                _context.Flights.Remove(flight);
+                await _context.SaveChangesAsync();
+            }
         }
+
+
     }
 }
